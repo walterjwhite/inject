@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.walterjwhite.java.infrastructure.inject.modules</groupId>
+    <artifactId>cli</artifactId>
+    <version>0.0.15-SNAPSHOT</version>
+  </parent>
+  <groupId>com.walterjwhite.java.infrastructure.inject.modules.cli</groupId>
+  <artifactId>api</artifactId>
+  <packaging>jar</packaging>
+  <name>inject - cli - api</name>
+  <description>inject-cli-api</description>
+  <dependencies>
+    <dependency>
+      <groupId>com.walterjwhite.java.dependencies</groupId>
+      <artifactId>commons-cli</artifactId>
+      <version>0.0.15-SNAPSHOT</version>
+      <type>pom</type>
+    </dependency>
+  </dependencies>
+</project>

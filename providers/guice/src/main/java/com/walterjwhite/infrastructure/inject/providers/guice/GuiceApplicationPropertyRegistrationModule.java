@@ -1,0 +1,47 @@
+package com.walterjwhite.infrastructure.inject.providers.guice;
+
+import com.google.inject.AbstractModule;
+import com.walterjwhite.infrastructure.inject.core.ApplicationInstance;
+import com.walterjwhite.infrastructure.inject.core.helper.ApplicationHelper;
+import com.walterjwhite.infrastructure.inject.core.service.ServiceManager;
+import com.walterjwhite.property.api.PropertyManager;
+import com.walterjwhite.property.api.property.ConfigurableProperty;
+import com.walterjwhite.property.impl.PropertyImpl;
+import lombok.RequiredArgsConstructor;
+import org.reflections.Reflections;
+
+/** This registers all properties as Guice "beans" */
+@RequiredArgsConstructor
+public class GuiceApplicationPropertyRegistrationModule extends AbstractModule {
+  protected final GuiceApplicationModule guiceApplicationModule;
+  protected transient PropertyManager propertyManager;
+
+  protected void configure() {
+    propertyManager = ApplicationHelper.getApplicationInstance().getPropertyManager();
+
+    bindCommon();
+    bindProperties();
+  }
+
+  protected void bindCommon() {
+    if (guiceApplicationModule != null) install(guiceApplicationModule);
+
+    bind(Reflections.class).toInstance(ApplicationHelper.getApplicationInstance().getReflections());
+    bind(ApplicationInstance.class).toInstance(ApplicationHelper.getApplicationInstance());
+    bind(PropertyManager.class)
+        .toInstance(ApplicationHelper.getApplicationInstance().getPropertyManager());
+    bind(ServiceManager.class)
+        .toInstance(ApplicationHelper.getApplicationInstance().getServiceManager());
+  }
+
+  protected void bindProperties() {
+    propertyManager.getKeys().forEach(configurableProperty -> bindToProperty(configurableProperty));
+  }
+
+  public void bindToProperty(Class<? extends ConfigurableProperty> configurablePropertyClass) {
+    final String value = propertyManager.get(configurablePropertyClass);
+
+    if (value != null)
+      bindConstant().annotatedWith(new PropertyImpl(configurablePropertyClass)).to(value);
+  }
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.walterjwhite.java.infrastructure.inject.modules.cli</groupId>
+    <artifactId>providers</artifactId>
+    <version>0.0.15-SNAPSHOT</version>
+  </parent>
+  <groupId>com.walterjwhite.java.infrastructure.inject.modules.cli.providers</groupId>
+  <artifactId>guice-test</artifactId>
+  <packaging>jar</packaging>
+  <name>inject - providers - guice-test</name>
+  <description>inject-providers-test</description>
+  <dependencies>
+    <dependency>
+      <groupId>com.walterjwhite.java.infrastructure.inject</groupId>
+      <artifactId>test</artifactId>
+      <version>0.0.15-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.walterjwhite.java.infrastructure.inject.modules.cli.providers</groupId>
+      <artifactId>guice</artifactId>
+      <version>0.0.15-SNAPSHOT</version>
+    </dependency>
+    <!-- This is required by the reflections API -->
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.walterjwhite.java.dependencies</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>0.0.15-SNAPSHOT</version>
+      <type>pom</type>
+    </dependency>
+  </dependencies>
+</project>

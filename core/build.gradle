@@ -1,0 +1,25 @@
+group = 'com.walterjwhite.infrastructure.google-guice'
+description = 'google - guice - core'
+dependencies {
+  compile project(':infrastructure:datastore:modules:external:api')
+  compile project(':infrastructure:datastore:modules:google-guice-persist-criteria-builder')
+  compile project(':infrastructure:datastore:api:service')
+  compile project(':infrastructure:datastore:modules:xz')
+  compile project(':infrastructure:datastore:api:service')
+  compile project(':infrastructure:datastore:modules:encryption:impl')
+  compile project(':infrastructure:datastore:api:service')
+  compile project(':infrastructure:dependencies:google-guice:core')
+  compile project(':infrastructure:datastore:modules:queue:impl')
+  compile project(':infrastructure:datastore:api:service')
+  compile project(':infrastructure:datastore:api:service')
+  compile project(':infrastructure:datastore:modules:shell:impl')
+  compile project(':infrastructure:datastore:modules:guava-event-bus')
+  compile project(':infrastructure:datastore:modules:watcher')
+  compile project(':infrastructure:dependencies:commons-codec')
+  compile project(':infrastructure:dependencies:json')
+  compile project(':infrastructure:datastore:modules:kryo')
+  runtime project(':infrastructure:datastore:modules:external:impl')
+  runtime project(':infrastructure:datastore:modules:download:providers:amazon-sqs')
+  runtime project(':infrastructure:datastore:modules:download:providers:local')
+  runtime project(':infrastructure:datastore:modules:ip:impl')
+}
