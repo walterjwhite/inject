@@ -1,1 +1,5 @@
-Google Guice wrappers / helpers
+Generic Dependency Injection Support (guice / CDI)
+
+1. guice is fully supported
+2. CDI is a work in progress and being refactored due to attempting to easily support annotations to qualify a specific bean instance to inject
+
