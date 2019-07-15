@@ -30,9 +30,7 @@ public class ServiceManager {
   }
 
   protected Set<Class<? extends StartupAware>> getStartupAwareServices() {
-    return reflections
-        .getSubTypesOf(StartupAware.class)
-        .stream()
+    return reflections.getSubTypesOf(StartupAware.class).stream()
         .filter(serviceClass -> PropertyHelper.isConcrete(serviceClass))
         .collect(Collectors.toSet());
   }

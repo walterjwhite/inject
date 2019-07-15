@@ -1,7 +1,0 @@
-group = 'com.walterjwhite.infrastructure.google-guice.modules'
-description = 'google - guice - property-test'
-dependencies {
-  compile project(':infrastructure:datastore:modules:logging')
-    compile group: 'dom4j', name: 'dom4j', version:'1.6.1'
-  compile project(':infrastructure:dependencies:slf4j-simple')
-}

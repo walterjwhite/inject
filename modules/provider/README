@@ -1,0 +1,6 @@
+intention of this project was to provide a facility to swap out an implementation for one or another based on policy, application event, etc.
+
+The real use case for this is still being worked out.
+
+Unanswered problems:
+1. when switching to another provider, data stored in one provider will not be visible in the other.  Is that okay, desired, or not? - Not sure, still working through the use case.

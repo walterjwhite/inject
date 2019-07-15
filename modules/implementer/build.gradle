@@ -1,0 +1,5 @@
+group = 'com.walterjwhite.infrastructure.google-guice.modules'
+description = 'google - guice - implementer'
+dependencies {
+  compile project(':infrastructure:dependencies:reflections')
+}

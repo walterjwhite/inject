@@ -29,6 +29,7 @@ public class GuiceInjector implements com.walterjwhite.infrastructure.inject.cor
   protected Stage getStage() {
     return GuiceApplicationEnvironmentMapping.getFromApplicationEnvironment(
             ApplicationHelper.getApplicationInstance()
+                .getApplicationSession()
                 .getApplicationIdentifier()
                 .getApplicationEnvironment())
         .getStage();

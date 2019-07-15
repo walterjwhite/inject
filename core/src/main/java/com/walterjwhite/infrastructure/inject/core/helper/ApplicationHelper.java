@@ -1,10 +1,13 @@
 package com.walterjwhite.infrastructure.inject.core.helper;
 
-import com.jcabi.manifests.Manifests;
 import com.walterjwhite.infrastructure.inject.core.ApplicationInstance;
+import com.walterjwhite.infrastructure.inject.core.NodeId;
 import com.walterjwhite.property.api.enumeration.ApplicationSCMVersion;
 import com.walterjwhite.property.api.property.ApplicationEnvironment;
 import com.walterjwhite.property.api.property.ApplicationManifestProperty;
+import com.walterjwhite.property.api.property.ConfigurableProperty;
+import com.walterjwhite.property.modules.environment.EnvironmentPropertySource;
+import com.walterjwhite.property.modules.manifest.ManifestPropertySource;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -44,11 +47,22 @@ public class ApplicationHelper {
   // TODO: the environment the JVM is reporting (env variable)
   // TODO: restrict this to just being picked up from the environment?
   public static ApplicationEnvironment getApplicationEnvironment() {
-    return getApplicationTargetEnvironment();
+    return ApplicationEnvironment.valueOf(
+        EnvironmentPropertySource.get(lookup(ApplicationEnvironment.class)));
+  }
+
+  // TODO: get this from the environment
+  public static String getNodeId() {
+    return EnvironmentPropertySource.get(lookup(NodeId.class));
   }
 
   public static String getManifestProperty(
       final Class<? extends ApplicationManifestProperty> applicationManifestProperty) {
-    return Manifests.read(applicationManifestProperty.getSimpleName());
+    return ManifestPropertySource.get(applicationManifestProperty.getSimpleName());
+  }
+
+  private static String lookup(
+      final Class<? extends ConfigurableProperty> configurablePropertyClass) {
+    return configurablePropertyClass.getName();
   }
 }

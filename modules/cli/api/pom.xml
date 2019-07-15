@@ -11,12 +11,4 @@
   <packaging>jar</packaging>
   <name>inject - cli - api</name>
   <description>inject-cli-api</description>
-  <dependencies>
-    <dependency>
-      <groupId>com.walterjwhite.java.dependencies</groupId>
-      <artifactId>commons-cli</artifactId>
-      <version>0.0.15-SNAPSHOT</version>
-      <type>pom</type>
-    </dependency>
-  </dependencies>
 </project>

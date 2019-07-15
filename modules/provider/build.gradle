@@ -1,0 +1,8 @@
+group = 'com.walterjwhite.infrastructure.google-guice.modules'
+description = 'google - guice - provider'
+dependencies {
+  compile project(':infrastructure:datastore:api:model')
+  compile project(':infrastructure:datastore:modules:google-guice-persist-criteria-builder')
+  compile project(':infrastructure:dependencies:reflections')
+  compile project(':infrastructure:dependencies:google-guava')
+}

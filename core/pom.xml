@@ -29,10 +29,24 @@
       <version>0.0.15-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>com.walterjwhite.java.dependencies</groupId>
-      <artifactId>jcabi-manifests</artifactId>
+      <groupId>com.walterjwhite.java.infrastructure.property.modules</groupId>
+      <artifactId>environment</artifactId>
       <version>0.0.15-SNAPSHOT</version>
-      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>com.walterjwhite.java.infrastructure.property.modules</groupId>
+      <artifactId>manifest</artifactId>
+      <version>0.0.15-SNAPSHOT</version>
+    </dependency>
+    <!--<dependency>-->
+    <!--<groupId>com.walterjwhite.java.infrastructure.datastore.api</groupId>-->
+    <!--<artifactId>model</artifactId>-->
+    <!--<version>0.0.15-SNAPSHOT</version>-->
+    <!--</dependency>-->
+    <dependency>
+      <groupId>com.walterjwhite.java.modules.shell.api</groupId>
+      <artifactId>model</artifactId>
+      <version>0.0.15-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

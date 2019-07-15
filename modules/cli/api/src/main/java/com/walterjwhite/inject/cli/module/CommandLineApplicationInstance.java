@@ -9,7 +9,8 @@ import com.walterjwhite.property.api.PropertyManager;
 import lombok.Getter;
 import org.reflections.Reflections;
 
-// TODO: re-add support for handler arguments (after the arguments are processed from the command-line, the remaining, unprocessed arguments are to be passed to the handler)
+// TODO: re-add support for handler arguments (after the arguments are processed from the
+// command-line, the remaining, unprocessed arguments are to be passed to the handler)
 // removed because it isn't used currently and may impact dependencies
 @Getter
 public class CommandLineApplicationInstance extends ApplicationInstance {

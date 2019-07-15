@@ -1,7 +1,11 @@
 package com.walterjwhite.infrastructure.inject.core;
 
+import com.walterjwhite.infrastructure.inject.core.helper.ApplicationHelper;
+import com.walterjwhite.infrastructure.inject.core.model.ApplicationIdentifier;
+import com.walterjwhite.infrastructure.inject.core.model.ApplicationSession;
 import com.walterjwhite.infrastructure.inject.core.service.ServiceManager;
 import com.walterjwhite.property.api.PropertyManager;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.reflections.Reflections;
@@ -14,7 +18,28 @@ public class ApplicationInstance {
   protected final ServiceManager serviceManager;
   protected final Injector injector;
 
-  protected final ApplicationIdentifier applicationIdentifier = new ApplicationIdentifier();
+  protected final ApplicationSession applicationSession;
+
+  public ApplicationInstance(
+      Reflections reflections,
+      PropertyManager propertyManager,
+      ServiceManager serviceManager,
+      Injector injector) {
+    this(
+        reflections,
+        propertyManager,
+        serviceManager,
+        injector,
+        new ApplicationSession(
+            new ApplicationIdentifier(
+                ApplicationHelper.getApplicationTargetEnvironment(),
+                ApplicationHelper.getApplicationEnvironment(),
+                ApplicationHelper.getApplicationName(),
+                ApplicationHelper.getImplementationVersion(),
+                ApplicationHelper.getSCMVersion()),
+            ApplicationHelper.getNodeId(),
+            LocalDateTime.now()));
+  }
 
   public void initialize() throws Exception {
     logApplicationIdentifier();
@@ -25,6 +50,6 @@ public class ApplicationInstance {
   }
 
   protected String logApplicationIdentifier() {
-    return applicationIdentifier.toString();
+    return applicationSession.toString();
   }
 }
