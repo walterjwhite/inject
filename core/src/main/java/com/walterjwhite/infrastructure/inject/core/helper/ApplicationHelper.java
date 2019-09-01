@@ -47,14 +47,31 @@ public class ApplicationHelper {
   // TODO: the environment the JVM is reporting (env variable)
   // TODO: restrict this to just being picked up from the environment?
   public static ApplicationEnvironment getApplicationEnvironment() {
-    return ApplicationEnvironment.valueOf(
-        EnvironmentPropertySource.get(lookup(ApplicationEnvironment.class)));
+    // return getOrDefault(ApplicationEnvironment.class, ApplicationEnvironment.Development);
+    final String value = EnvironmentPropertySource.get(lookup(ApplicationEnvironment.class));
+    if (value == null) return ApplicationEnvironment.Development;
+
+    return ApplicationEnvironment.valueOf(value);
   }
 
   // TODO: get this from the environment
   public static String getNodeId() {
-    return EnvironmentPropertySource.get(lookup(NodeId.class));
+    // return EnvironmentPropertySource.get(lookup(NodeId.class));
+    // return getOrDefault(NodeId.class, "local");
+    final String value = EnvironmentPropertySource.get(lookup(NodeId.class));
+    if (value == null) return "local";
+
+    return value;
   }
+
+  //  private static <ValueType> getOrDefault(final Class<? extends ConfigurableProperty>
+  // propertyType, final ValueType defaultValue){
+  //    final String environmentValue = EnvironmentPropertySource.get(lookup(propertyType));
+  //    if(environmentValue != null)
+  //      return (ValueType) Enum.valueOf((Class<? extends Enum>) propertyType, environmentValue);
+  //
+  //    return defaultValue;
+  //  }
 
   public static String getManifestProperty(
       final Class<? extends ApplicationManifestProperty> applicationManifestProperty) {

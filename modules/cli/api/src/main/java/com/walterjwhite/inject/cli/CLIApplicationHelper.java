@@ -7,6 +7,7 @@ import com.walterjwhite.inject.cli.module.CommandLineApplicationInstance;
 import com.walterjwhite.inject.cli.property.OperatingMode;
 import com.walterjwhite.property.impl.DefaultPropertyManager;
 import com.walterjwhite.property.impl.DefaultPropertyNameLookupService;
+import java.util.Iterator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.reflections.Reflections;
@@ -52,7 +53,13 @@ public class CLIApplicationHelper {
 
   // there should only ever be one
   private static Class<? extends OperatingMode> getOperatingModeClass(Reflections reflections) {
-    return reflections.getSubTypesOf(OperatingMode.class).iterator().next();
+    final Iterator<Class<? extends OperatingMode>> operatingModeIterator =
+        reflections.getSubTypesOf(OperatingMode.class).iterator();
+
+    if (operatingModeIterator.hasNext()) return operatingModeIterator.next();
+
+    throw new Error(
+        "Application is improperly configured, there must be one and only one OperatingMode class in the classpath");
   }
 
   //  public static void setHandlerArguments(final String[] handlerArguments) {
