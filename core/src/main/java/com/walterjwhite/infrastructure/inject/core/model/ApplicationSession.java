@@ -9,8 +9,10 @@ import javax.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.ToString;
 
 @Data
+@ToString(doNotUseGetters = true)
 @Entity
 public class ApplicationSession extends AbstractEntity {
   @NonNull

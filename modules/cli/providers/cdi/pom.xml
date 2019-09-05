@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.walterjwhite.java.infrastructure.inject.modules.cli</groupId>
     <artifactId>providers</artifactId>
-    <version>0.0.15-SNAPSHOT</version>
+    <version>0.0.17-SNAPSHOT</version>
   </parent>
   <groupId>com.walterjwhite.java.infrastructure.inject.modules.cli.providers</groupId>
   <artifactId>cdi</artifactId>
@@ -15,7 +15,7 @@
     <dependency>
       <groupId>com.walterjwhite.java.dependencies</groupId>
       <artifactId>commons-cli</artifactId>
-      <version>0.0.15-SNAPSHOT</version>
+      <version>0.0.17-SNAPSHOT</version>
       <type>pom</type>
     </dependency>
     <!--<dependency>-->
@@ -27,7 +27,7 @@
     <dependency>
       <groupId>com.walterjwhite.java.infrastructure.inject.providers</groupId>
       <artifactId>cdi</artifactId>
-      <version>0.0.15-SNAPSHOT</version>
+      <version>0.0.17-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

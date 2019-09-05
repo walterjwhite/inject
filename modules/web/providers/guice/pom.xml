@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.walterjwhite.java.infrastructure.inject.modules.web</groupId>
     <artifactId>providers</artifactId>
-    <version>0.0.15-SNAPSHOT</version>
+    <version>0.0.17-SNAPSHOT</version>
   </parent>
   <groupId>com.walterjwhite.java.infrastructure.inject.modules.web.providers</groupId>
   <artifactId>guice</artifactId>
