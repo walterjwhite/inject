@@ -3,6 +3,7 @@ package com.walterjwhite.infrastructure.inject.core.enumeration;
 // this is in-place for CDI since it seems to need the specific type for a value whereas Guice
 // automatically adapts the value from a String to a primitive type
 // unused currently
+
 @Deprecated
 public enum PropertyType {
   String {

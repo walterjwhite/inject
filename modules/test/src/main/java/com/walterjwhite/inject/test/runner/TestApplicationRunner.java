@@ -8,6 +8,7 @@ import com.walterjwhite.inject.test.annotation.UseTestPropertyProvider;
 import com.walterjwhite.inject.test.property.PropertyValuePair;
 import com.walterjwhite.property.impl.DefaultPropertyManager;
 import com.walterjwhite.property.impl.DefaultPropertyNameLookupService;
+import com.walterjwhite.property.impl.DefaultSecretService;
 import java.lang.reflect.Method;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,10 @@ public class TestApplicationRunner
 
     new TestApplicationInstance(
         reflections,
-        new DefaultPropertyManager(new DefaultPropertyNameLookupService(), reflections),
+        new DefaultPropertyManager(
+            new DefaultPropertyNameLookupService(),
+            reflections,
+            new DefaultSecretService() /*TODO: allow this to be overridden*/),
         new ServiceManager(reflections),
         getInjector(),
         testClass);

@@ -3,6 +3,7 @@ package com.walterjwhite.inject.cli.module;
 import com.walterjwhite.infrastructure.inject.core.ApplicationInstance;
 import com.walterjwhite.infrastructure.inject.core.Injector;
 import com.walterjwhite.infrastructure.inject.core.service.ServiceManager;
+import com.walterjwhite.inject.cli.CLIApplicationHelper;
 import com.walterjwhite.inject.cli.service.AbstractCommandLineHandler;
 import com.walterjwhite.property.api.PropertyManager;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import org.reflections.Reflections;
 @Getter
 public class CommandLineApplicationInstance extends ApplicationInstance {
   //  protected final Class<? extends OperatingMode> operatingModeClass;
-  protected final Class<? extends AbstractCommandLineHandler> commandLineHandlerClass;
+  protected transient Class<? extends AbstractCommandLineHandler> commandLineHandlerClass;
   protected final String[] arguments;
   // protected final String[] handlerArguments;
 
@@ -23,22 +24,27 @@ public class CommandLineApplicationInstance extends ApplicationInstance {
       PropertyManager propertyManager,
       ServiceManager serviceManager,
       Injector injector,
-      Class<? extends AbstractCommandLineHandler> commandLineHandlerClass,
       String[] arguments) {
     super(reflections, propertyManager, serviceManager, injector);
-    this.commandLineHandlerClass = commandLineHandlerClass;
     this.arguments = arguments;
   }
 
   // TODO: generalize code from other command line module implementations
   public void doRun() throws Exception {
     initialize();
+    initializeCommandLineHandler();
     doRunInternal();
+  }
+
+  /** This must be set after property registration has taken place */
+  protected void initializeCommandLineHandler() {
+    commandLineHandlerClass =
+        CLIApplicationHelper.getCommandLineHandlerClass(reflections, propertyManager);
   }
 
   protected void doRunInternal() throws Exception {
     final AbstractCommandLineHandler abstractCommandLineHandler =
-        getInjector().getInstance(getCommandLineHandlerClass());
+        getInjector().getInstance(/*getCommandLineHandlerClass()*/ commandLineHandlerClass);
 
     abstractCommandLineHandler.run(/*CLIApplicationHelper.getHandlerArguments()*/ arguments);
   }
