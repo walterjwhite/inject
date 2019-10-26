@@ -28,7 +28,7 @@ public abstract class AbstractProvider<ProviderType> implements Provider<Provide
       return (ProviderType)
           injector.getInstance(Class.forName(serviceProviderType.getServiceInterfaceClassname()));
     } catch (ClassNotFoundException e) {
-      throw (new ProviderConfigurationError("Error getting instance", e));
+      throw new ProviderConfigurationError("Error getting instance", e);
     }
   }
 }

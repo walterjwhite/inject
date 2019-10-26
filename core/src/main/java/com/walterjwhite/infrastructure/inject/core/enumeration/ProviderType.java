@@ -1,5 +1,6 @@
 package com.walterjwhite.infrastructure.inject.core.enumeration;
 
+import com.walterjwhite.infrastructure.inject.core.ProviderConstructionException;
 import com.walterjwhite.infrastructure.inject.core.helper.ApplicationHelper;
 import java.lang.reflect.InvocationTargetException;
 
@@ -27,7 +28,7 @@ public enum ProviderType {
           | IllegalAccessException
           | InvocationTargetException
           | NoSuchMethodException e) {
-        throw new Error("Error initializing"); //
+        throw new ProviderConstructionException(targetClass, e); //
         // + ArrayUtils.toString(arguments) + " / " + ArrayUtils.toString(constructorArguments));
       }
     }

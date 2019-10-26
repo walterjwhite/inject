@@ -6,6 +6,7 @@ import com.walterjwhite.infrastructure.inject.core.service.ServiceManager;
 import com.walterjwhite.inject.cli.module.CommandLineApplicationInstance;
 import com.walterjwhite.inject.cli.property.OperatingMode;
 import com.walterjwhite.inject.cli.service.AbstractCommandLineHandler;
+import com.walterjwhite.logging.annotation.LogStackTrace;
 import com.walterjwhite.property.api.PropertyManager;
 import com.walterjwhite.property.api.SecretService;
 import com.walterjwhite.property.impl.DefaultPropertyManager;
@@ -51,9 +52,13 @@ public class CLIApplicationHelper {
       COMMAND_LINE_APPLICATION_INSTANCE.doRun();
       doExit(0);
     } catch (Throwable t) {
+      onException(t);
       doExit(1);
     }
   }
+
+  @LogStackTrace
+  private static void onException(final Throwable t) {}
 
   private static Injector getInjector(Reflections reflections)
       throws IllegalAccessException, InstantiationException {
@@ -71,7 +76,7 @@ public class CLIApplicationHelper {
         getCommandLineHandlerClass(reflections);
     if (commandLineHandlerClass.isPresent()) return commandLineHandlerClass.get();
 
-    throw new Error(
+    throw new CLIConfigurationException(
         "Application is improperly configured, there must be one and only one OperatingMode class in the classpath");
   }
 
@@ -133,7 +138,7 @@ public class CLIApplicationHelper {
       }
     }
 
-    throw new Error("Application does not have a secret service configured.");
+    throw new CLIConfigurationException("Application does not have a secret service configured.");
   }
 
   /** This *MUST* NOT be called within a shutdown hook, otherwise, the thread will deadlock */

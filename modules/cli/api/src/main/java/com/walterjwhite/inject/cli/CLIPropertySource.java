@@ -28,7 +28,7 @@ public class CLIPropertySource extends AbstractSingularStringPropertySource<Conf
           .next()
           .newInstance();
     } catch (IllegalAccessException | InstantiationException e) {
-      throw new Error(
+      throw new CLIConfigurationException(
           "Application is mis-configured - CLIParser should have a public, no-arg constructor");
     }
   }

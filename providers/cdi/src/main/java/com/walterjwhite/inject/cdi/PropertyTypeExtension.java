@@ -35,8 +35,7 @@ public class PropertyTypeExtension implements Extension {
     final String value = propertyManager.get(configurablePropertyClass);
     final Class propertyValueType = propertyManager.type(configurablePropertyClass);
 
-    PropertyHelper.validatePropertyConfiguration(
-        configurablePropertyClass, propertyValueType, value);
+    PropertyHelper.validatePropertyConfiguration(configurablePropertyClass, value);
 
     AnnotatedType<String> annotatedType = beanManager.createAnnotatedType(propertyValueType);
 
