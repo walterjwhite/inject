@@ -9,6 +9,7 @@ import com.walterjwhite.inject.test.property.PropertyValuePair;
 import com.walterjwhite.property.impl.DefaultPropertyManager;
 import com.walterjwhite.property.impl.DefaultPropertyNameLookupService;
 import com.walterjwhite.property.impl.DefaultSecretService;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -54,15 +55,24 @@ public class TestApplicationRunner
   }
 
   protected PropertyValuePair[] getTestPropertyProvider()
-      throws InstantiationException, IllegalAccessException {
+      throws InstantiationException, IllegalAccessException, NoSuchMethodException,
+          InvocationTargetException {
     return ((UseTestPropertyProvider) testClass.getAnnotation(UseTestPropertyProvider.class))
         .value()
+        .getDeclaredConstructor()
         .newInstance()
         .getTestProperties();
   }
 
-  protected Injector getInjector() throws IllegalAccessException, InstantiationException {
-    return reflections.getSubTypesOf(Injector.class).iterator().next().newInstance();
+  protected Injector getInjector()
+      throws IllegalAccessException, InstantiationException, NoSuchMethodException,
+          InvocationTargetException {
+    return reflections
+        .getSubTypesOf(Injector.class)
+        .iterator()
+        .next()
+        .getDeclaredConstructor()
+        .newInstance();
   }
 
   @Override

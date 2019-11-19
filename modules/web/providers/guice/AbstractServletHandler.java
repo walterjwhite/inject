@@ -29,6 +29,7 @@ public abstract class AbstractServletHandler {
                       .getTypesAnnotatedWith(ApplicationServletModule.class)
                       .iterator()
                       .next()
+                      .getDeclaredConstructor()
                       .newInstance());
     } catch (InstantiationException | IllegalAccessException e) {
       throw new IllegalStateException("Misconfigured", e);

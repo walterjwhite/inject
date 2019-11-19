@@ -4,7 +4,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
 import com.walterjwhite.infrastructure.inject.core.helper.ApplicationHelper;
-import java.util.NoSuchElementException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 import javax.enterprise.util.AnnotationLiteral;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,15 @@ public class GuiceInjector implements com.walterjwhite.infrastructure.inject.cor
       guiceApplicationPropertyRegistrationModule;
   protected transient volatile Injector injector;
 
-  public void initialize() throws InstantiationException, IllegalAccessException {
+  public void initialize()
+      throws InstantiationException, IllegalAccessException, NoSuchMethodException,
+          InvocationTargetException {
     createInjector();
   }
 
-  public void createInjector() throws InstantiationException, IllegalAccessException {
+  public void createInjector()
+      throws InstantiationException, IllegalAccessException, NoSuchMethodException,
+          InvocationTargetException {
     guiceApplicationPropertyRegistrationModule =
         new GuiceApplicationPropertyRegistrationModule(getGuiceApplicationModule());
     injector = Guice.createInjector(getStage(), guiceApplicationPropertyRegistrationModule);
@@ -36,20 +41,18 @@ public class GuiceInjector implements com.walterjwhite.infrastructure.inject.cor
   }
 
   protected GuiceApplicationModule getGuiceApplicationModule()
-      throws IllegalAccessException, InstantiationException {
-    try {
-      return getGuiceApplicationModuleClass().newInstance();
-    } catch (NoSuchElementException e) {
-      return null;
-    }
-  }
+      throws IllegalAccessException, InstantiationException, NoSuchMethodException,
+          InvocationTargetException {
+    final Iterator<Class<? extends GuiceApplicationModule>> guiceApplicationModuleIterator =
+        ApplicationHelper.getApplicationInstance()
+            .getReflections()
+            .getSubTypesOf(GuiceApplicationModule.class)
+            .iterator();
 
-  protected Class<? extends GuiceApplicationModule> getGuiceApplicationModuleClass() {
-    return ApplicationHelper.getApplicationInstance()
-        .getReflections()
-        .getSubTypesOf(GuiceApplicationModule.class)
-        .iterator()
-        .next();
+    if (guiceApplicationModuleIterator.hasNext())
+      return guiceApplicationModuleIterator.next().getDeclaredConstructor().newInstance();
+
+    return null;
   }
 
   @Override

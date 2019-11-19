@@ -6,7 +6,9 @@ import com.walterjwhite.infrastructure.inject.core.helper.ApplicationHelper;
 import com.walterjwhite.infrastructure.inject.core.service.ServiceManager;
 import com.walterjwhite.property.api.PropertyManager;
 import com.walterjwhite.property.api.property.ConfigurableProperty;
+import com.walterjwhite.property.impl.PropertyHelper;
 import com.walterjwhite.property.impl.PropertyImpl;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.reflections.Reflections;
 
@@ -39,9 +41,26 @@ public class GuiceApplicationPropertyRegistrationModule extends AbstractModule {
   }
 
   public void bindToProperty(Class<? extends ConfigurableProperty> configurablePropertyClass) {
+    // TODO: support optional values here
+    //    if(configurablePropertyClass.isAnnotationPresent(Optional.class)){
+    //      final Optional<String> optionalValue = propertyManager.get(configurablePropertyClass);
+    //      bindConstant().annotatedWith(new PropertyImpl(configurablePropertyClass)).to();
+    //      return;
+    //    }
+
     final String value = propertyManager.get(configurablePropertyClass);
 
-    if (value != null)
-      bindConstant().annotatedWith(new PropertyImpl(configurablePropertyClass)).to(value);
+    if (PropertyHelper.isOptional(configurablePropertyClass)) {
+      // OptionalBinder.newOptionalBinder(binder(),
+      // configurablePropertyClass).setDefault().toInstance(value));
+      // OptionalBinder.newOptionalBinder(binder().)
+      bindConstant()
+          .annotatedWith(new PropertyImpl(configurablePropertyClass))
+          .to(Optional.ofNullable(value));
+    } else {
+
+      if (value != null)
+        bindConstant().annotatedWith(new PropertyImpl(configurablePropertyClass)).to(value);
+    }
   }
 }

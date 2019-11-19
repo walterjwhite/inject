@@ -5,6 +5,7 @@ import com.walterjwhite.property.api.PropertyManager;
 import com.walterjwhite.property.api.annotation.PropertySourceIndex;
 import com.walterjwhite.property.api.property.ConfigurableProperty;
 import com.walterjwhite.property.impl.source.AbstractSingularStringPropertySource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 @PropertySourceIndex(10)
@@ -26,8 +27,12 @@ public class CLIPropertySource extends AbstractSingularStringPropertySource<Conf
           .getSubTypesOf(CLIParser.class)
           .iterator()
           .next()
+          .getDeclaredConstructor()
           .newInstance();
-    } catch (IllegalAccessException | InstantiationException e) {
+    } catch (IllegalAccessException
+        | InstantiationException
+        | NoSuchMethodException
+        | InvocationTargetException e) {
       throw new CLIConfigurationException(
           "Application is mis-configured - CLIParser should have a public, no-arg constructor");
     }

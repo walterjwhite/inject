@@ -12,6 +12,7 @@ import com.walterjwhite.property.api.SecretService;
 import com.walterjwhite.property.impl.DefaultPropertyManager;
 import com.walterjwhite.property.impl.DefaultPropertyNameLookupService;
 import com.walterjwhite.property.impl.PropertyHelper;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Optional;
 import lombok.AccessLevel;
@@ -61,8 +62,14 @@ public class CLIApplicationHelper {
   private static void onException(final Throwable t) {}
 
   private static Injector getInjector(Reflections reflections)
-      throws IllegalAccessException, InstantiationException {
-    return reflections.getSubTypesOf(Injector.class).iterator().next().newInstance();
+      throws IllegalAccessException, InstantiationException, NoSuchMethodException,
+          InvocationTargetException {
+    return reflections
+        .getSubTypesOf(Injector.class)
+        .iterator()
+        .next()
+        .getDeclaredConstructor()
+        .newInstance();
   }
 
   // there should only ever be one
@@ -99,17 +106,9 @@ public class CLIApplicationHelper {
   private static Optional<Class<? extends AbstractCommandLineHandler>> getCommandLineHandlerClass(
       final Reflections reflections) {
     // use the first available option
-    final Iterator<Class<? extends AbstractCommandLineHandler>> commandLineHandlerClassIterator =
-        reflections.getSubTypesOf(AbstractCommandLineHandler.class).iterator();
-
-    if (commandLineHandlerClassIterator.hasNext()) {
-      final Class<? extends AbstractCommandLineHandler> commandLineHandlerClass =
-          commandLineHandlerClassIterator.next();
-      if (PropertyHelper.isConcrete(commandLineHandlerClass))
-        return Optional.of(commandLineHandlerClass);
-    }
-
-    return Optional.empty();
+    return reflections.getSubTypesOf(AbstractCommandLineHandler.class).stream()
+        .filter(commandLineHandlerClass -> PropertyHelper.isConcrete(commandLineHandlerClass))
+        .findFirst();
   }
 
   private static OperatingMode getOperatingMode(
@@ -126,7 +125,8 @@ public class CLIApplicationHelper {
   //  }
 
   private static SecretService getSecretService(final Reflections reflections)
-      throws IllegalAccessException, InstantiationException {
+      throws IllegalAccessException, InstantiationException, NoSuchMethodException,
+          InvocationTargetException {
     // use the first available option
     final Iterator<Class<? extends SecretService>> secretServiceIterator =
         reflections.getSubTypesOf(SecretService.class).iterator();
@@ -134,7 +134,7 @@ public class CLIApplicationHelper {
     if (secretServiceIterator.hasNext()) {
       final Class<? extends SecretService> secretServiceClass = secretServiceIterator.next();
       if (PropertyHelper.isConcrete(secretServiceClass)) {
-        return secretServiceClass.newInstance();
+        return secretServiceClass.getDeclaredConstructor().newInstance();
       }
     }
 

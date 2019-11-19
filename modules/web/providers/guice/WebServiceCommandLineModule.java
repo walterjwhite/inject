@@ -19,7 +19,7 @@ public class WebServiceCommandLineModule extends AbstractCommandLineModule {
     /*
     for(final Class<? extends ServletModule> servletModuleClass:servletModuleClases) {
       try {
-        install(servletModuleClass.newInstance());
+        install(servletModuleClass.getDeclaredConstructor().newInstance());
       } catch (InstantiationException|IllegalAccessException e) {
       throw(new RuntimeException("Configuration error", e));
       }
